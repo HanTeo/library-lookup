@@ -1,16 +1,16 @@
 import java.util.*;
 
-public class Library {
+class Library {
     private HashMap<String, Set<String>> authorsByTitles;
     private HashMap<String, Set<String>> titlesByAuthor;
 
     Library(Book[] books) {
         authorsByTitles = new HashMap<>();
         titlesByAuthor = new HashMap<>();
-        Arrays.stream(books).forEach(b -> add(b));
+        Arrays.stream(books).forEach(this::add);
     }
 
-    public void add(Book book) {
+    void add(Book book) {
         Set<String> authors = authorsByTitles.putIfAbsent(book.getTitle(), new HashSet<>());
         if (authors == null) {
             authors = getAuthors(book.getTitle());
@@ -26,7 +26,7 @@ public class Library {
         }
     }
 
-    public void removeTitle(String title) {
+    void removeTitle(String title) {
         Set<String> authors = getAuthors(title);
 
         if (authors == null)
@@ -40,7 +40,7 @@ public class Library {
                 .removeIf(entry -> entry.getValue().isEmpty());
     }
 
-    public void removeByAuthor(String author) {
+    void removeByAuthor(String author) {
         Set<String> titles = getTitles(author);
 
         if (titles == null)
@@ -54,19 +54,19 @@ public class Library {
                 .removeIf(entry -> entry.getValue().isEmpty());
     }
 
-    public Set<String> getAuthors() {
+    Set<String> getAuthors() {
         return titlesByAuthor.keySet();
     }
 
-    public Set<String> getAuthors(String title) {
+    Set<String> getAuthors(String title) {
         return authorsByTitles.get(title);
     }
 
-    public Set<String> getTitles() {
+    Set<String> getTitles() {
         return authorsByTitles.keySet();
     }
 
-    public Set<String> getTitles(String author) {
+    Set<String> getTitles(String author) {
         return titlesByAuthor.get(author);
     }
 }
