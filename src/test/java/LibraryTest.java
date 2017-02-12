@@ -9,7 +9,7 @@ public class LibraryTest {
     @Before
     public void setUp() throws Exception {
         Book[] books = new Book[]{
-                new Book("Harry Potter", new String[]{"J.K. Rowling"})
+                new Book("Harry Potter", "J.K. Rowling")
         };
 
         library = new Library(books);
@@ -36,7 +36,7 @@ public class LibraryTest {
 
     @Test
     public void testAddTitleOfSameAuthor() throws Exception {
-        library.add(new Book("Fantastic Beasts", new String[]{"J.K. Rowling"}));
+        library.add(new Book("Fantastic Beasts", "J.K. Rowling"));
 
         Set<String> authors = new HashSet<>();
         authors.add("J.K. Rowling");
@@ -51,7 +51,7 @@ public class LibraryTest {
 
     @Test
     public void testAddTitleOfDifferentAuthor() throws Exception {
-        library.add(new Book("The Art of Computer Programming", new String[]{"Donald Knuth"}));
+        library.add(new Book("The Art of Computer Programming", "Donald Knuth"));
 
         Set<String> authors = new HashSet<>();
         authors.add("J.K. Rowling");
@@ -67,7 +67,7 @@ public class LibraryTest {
 
     @Test
     public void testAddTitleOfWithMultipleAuthors() throws Exception {
-        library.add(new Book("The Elements of Style", new String[]{"E.B. White", "William Strunk Jr."}));
+        library.add(new Book("The Elements of Style", "E.B. White", "William Strunk Jr."));
 
         Set<String> authors = new HashSet<>();
         authors.add("J.K. Rowling");
@@ -84,8 +84,8 @@ public class LibraryTest {
 
     @Test
     public void testGetTitlesOfGivenAuthor() throws Exception {
-        library.add(new Book("Fantastic Beasts", new String[]{"J.K. Rowling"}));
-        library.add(new Book("The Elements of Style", new String[]{"E.B. White", "William Strunk Jr."}));
+        library.add(new Book("Fantastic Beasts", "J.K. Rowling"));
+        library.add(new Book("The Elements of Style", "E.B. White", "William Strunk Jr."));
 
         Set<String> titles = new HashSet<>();
         titles.add("Harry Potter");
@@ -101,8 +101,8 @@ public class LibraryTest {
 
     @Test
     public void testGetAuthorsOfGivenTitle() throws Exception {
-        library.add(new Book("Fantastic Beasts", new String[]{"J.K. Rowling"}));
-        library.add(new Book("The Elements of Style", new String[]{"E.B. White", "William Strunk Jr."}));
+        library.add(new Book("Fantastic Beasts", "J.K. Rowling"));
+        library.add(new Book("The Elements of Style", "E.B. White", "William Strunk Jr."));
 
         Set<String> fantasticBeastAuthor = new HashSet<>();
         fantasticBeastAuthor.add("J.K. Rowling");
@@ -122,8 +122,8 @@ public class LibraryTest {
 
     @Test
     public void testRemoveGivenTitle() throws Exception {
-        library.add(new Book("Fantastic Beasts", new String[]{"J.K. Rowling"}));
-        library.add(new Book("The Elements of Style", new String[]{"E.B. White", "William Strunk Jr."}));
+        library.add(new Book("Fantastic Beasts", "J.K. Rowling"));
+        library.add(new Book("The Elements of Style", "E.B. White", "William Strunk Jr."));
         library.removeTitle("The Elements of Style");
 
         Set<String> remainingBooks = new HashSet<>();
@@ -142,8 +142,8 @@ public class LibraryTest {
 
     @Test
     public void testRemoveTitlesFromGivenAuthor() throws Exception {
-        library.add(new Book("Fantastic Beasts", new String[]{"J.K. Rowling"}));
-        library.add(new Book("The Elements of Style", new String[]{"E.B. White", "William Strunk Jr."}));
+        library.add(new Book("Fantastic Beasts", "J.K. Rowling"));
+        library.add(new Book("The Elements of Style", "E.B. White", "William Strunk Jr."));
         library.removeByAuthor("J.K. Rowling");
 
         Set<String> remainingBooks = new HashSet<>();
@@ -160,7 +160,7 @@ public class LibraryTest {
 
     @Test
     public void AddingDupesHasNoEffect() throws Exception {
-        library.add(new Book("Harry Potter", new String[]{ "J.K. Rowling" }));
+        library.add(new Book("Harry Potter", "J.K. Rowling"));
 
         Set<String> authors = new HashSet<>();
         authors.add("J.K. Rowling");
@@ -174,8 +174,8 @@ public class LibraryTest {
 
     @Test
     public void testRemoveAuthorWithMoreThanOneAuthors() throws Exception {
-        library.add(new Book("The Art of Computer Programming", new String[]{"Donald Knuth"}));
-        library.add(new Book("Mathematics for the Analysis of Algorithms", new String[]{"Donald Knuth", "Daniel Greene"}));
+        library.add(new Book("The Art of Computer Programming", "Donald Knuth"));
+        library.add(new Book("Mathematics for the Analysis of Algorithms", "Donald Knuth", "Daniel Greene"));
         library.removeByAuthor("Donald Knuth");
 
         Set<String> authors = new HashSet<>();
@@ -193,8 +193,8 @@ public class LibraryTest {
 
     @Test
     public void testRemoveTitleWithMoreThanOneAuthors() throws Exception {
-        library.add(new Book("The Art of Computer Programming", new String[]{"Donald Knuth"}));
-        library.add(new Book("Mathematics for the Analysis of Algorithms", new String[]{"Donald Knuth", "Daniel Greene"}));
+        library.add(new Book("The Art of Computer Programming", "Donald Knuth"));
+        library.add(new Book("Mathematics for the Analysis of Algorithms", "Donald Knuth", "Daniel Greene"));
         library.removeTitle("Mathematics for the Analysis of Algorithms");
 
         Set<String> authors = new HashSet<>();

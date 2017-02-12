@@ -1,8 +1,8 @@
-public class Book {
+class Book {
     private final String title;
     private final String[] authors;
 
-    public Book(String title, String[] authors) {
+    public Book(String title, String... authors) {
 
         this.title = title;
         this.authors = authors;
