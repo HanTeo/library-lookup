@@ -34,10 +34,14 @@ class Library {
 
         authorsByTitles.remove(title);
 
-        authors.forEach(a -> getTitles(a).remove(title));
-
-        titlesByAuthor.entrySet()
-                .removeIf(entry -> entry.getValue().isEmpty());
+        authors.forEach( author -> {
+            Set<String> titles = getTitles(author);
+            if(titles.size() > 1){
+                titles.remove(title);
+            }else{
+                titlesByAuthor.remove(author, titles);
+            }
+        });
     }
 
     void removeByAuthor(String author) {
@@ -48,10 +52,14 @@ class Library {
 
         titlesByAuthor.remove(author);
 
-        titles.forEach(t -> getAuthors(t).remove(author));
-
-        authorsByTitles.entrySet()
-                .removeIf(entry -> entry.getValue().isEmpty());
+        titles.forEach( title -> {
+            Set<String> authors = getAuthors(title);
+            if(authors.size() > 1) {
+                authors.remove(author);
+            } else{
+                authorsByTitles.remove(title, authors);
+            }
+        });
     }
 
     Set<String> getAuthors() {
