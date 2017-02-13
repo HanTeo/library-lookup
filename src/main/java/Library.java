@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Library {
+public class Library implements IndexedLookUp {
 
     private HashMap<String, Set<String>> authorsByTitles;
     private HashMap<String, Set<String>> titlesByAuthor;
@@ -11,6 +11,7 @@ public class Library {
         Arrays.stream(books).forEach(this::add);
     }
 
+    @Override
     public void add(Book book) {
 
         appendTitlesIndex(book);
@@ -19,6 +20,7 @@ public class Library {
     }
 
     private void appendAuthorsIndex(Book book) {
+
         for (String author : book.getAuthors()) {
             Set<String> titles = titlesByAuthor.putIfAbsent(author, new HashSet<>());
             if (titles == null) {
@@ -29,6 +31,7 @@ public class Library {
     }
 
     private void appendTitlesIndex(Book book) {
+
         Set<String> authors = authorsByTitles.putIfAbsent(book.getTitle(), new HashSet<>());
         if (authors == null) {
             authors = getAuthors(book.getTitle());
@@ -36,6 +39,7 @@ public class Library {
         Collections.addAll(authors, book.getAuthors());
     }
 
+    @Override
     public void removeByTitle(String title) {
         Set<String> authors = getAuthors(title);
 
@@ -54,6 +58,7 @@ public class Library {
         });
     }
 
+    @Override
     public void removeByAuthor(String author) {
         Set<String> titles = getTitles(author);
 
@@ -72,18 +77,22 @@ public class Library {
         });
     }
 
+    @Override
     public Set<String> getAuthors() {
         return titlesByAuthor.keySet();
     }
 
+    @Override
     public Set<String> getAuthors(String title) {
         return authorsByTitles.get(title);
     }
 
+    @Override
     public Set<String> getTitles() {
         return authorsByTitles.keySet();
     }
 
+    @Override
     public Set<String> getTitles(String author) {
         return titlesByAuthor.get(author);
     }
