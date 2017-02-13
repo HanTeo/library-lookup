@@ -1,5 +1,5 @@
 # library-lookup
-A Java / Gradle TDD project 
+A Java / Gradle TDD project. The demo class makes use of some Java 8 features i.e. Stream & Lambdas
 
 ## Index by Author -> Titles
 Internally this is a HashMap<String, Set<String>>
