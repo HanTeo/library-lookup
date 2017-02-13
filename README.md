@@ -23,3 +23,5 @@ Each add operation will update both:
 Each remove operation will also update both: 
   1. Author to Titles Index
   2. Title to Authors Index
+
+NOTE : Removing authors will also remove co-authors for the title
