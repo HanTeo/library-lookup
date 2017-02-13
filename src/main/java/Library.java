@@ -1,9 +1,11 @@
+import com.sun.corba.se.impl.encoding.OSFCodeSetRegistry;
+
 import java.util.*;
 
 public class Library implements IndexedLookUp {
 
-    private HashMap<String, Set<String>> authorsByTitles;
-    private HashMap<String, Set<String>> titlesByAuthor;
+    private Map<String, Set<String>> authorsByTitles;
+    private Map<String, Set<String>> titlesByAuthor;
 
     public Library(Book[] books) {
         authorsByTitles = new HashMap<>();
@@ -48,11 +50,11 @@ public class Library implements IndexedLookUp {
 
         authorsByTitles.remove(title);
 
-        authors.forEach( author -> {
+        authors.forEach(author -> {
             Set<String> titles = getTitles(author);
-            if(titles.size() > 1){
+            if (titles.size() > 1) {
                 titles.remove(title);
-            }else{
+            } else {
                 titlesByAuthor.remove(author, titles);
             }
         });
@@ -67,11 +69,19 @@ public class Library implements IndexedLookUp {
 
         titlesByAuthor.remove(author);
 
-        titles.forEach( title -> {
+        titles.forEach(title -> {
             Set<String> authors = getAuthors(title);
-            if(authors.size() > 1) {
+            if (authors.size() > 1) {
                 authors.remove(author);
-            } else{
+                authors.forEach(associate -> {
+                    Set<String> ts = getTitles(associate);
+                    if (ts.size() > 1) {
+                        ts.remove(title);
+                    } else {
+                        titlesByAuthor.remove(associate);
+                    }
+                });
+            } else {
                 authorsByTitles.remove(title, authors);
             }
         });

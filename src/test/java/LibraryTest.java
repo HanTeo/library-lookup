@@ -208,9 +208,28 @@ public class LibraryTest {
     }
 
     @Test
-    public void removeAuthorWithMoreThanOneAuthors() throws Exception {
+    public void removeAuthorForBooksWithMoreThanOneAuthorsAlsoRemovesEntryForAssociatedAuthor() throws Exception {
         library.add(new Book("The Art of Computer Programming", "Donald Knuth"));
         library.add(new Book("Mathematics for the Analysis of Algorithms", "Donald Knuth", "Daniel Greene"));
+        library.removeByAuthor("Donald Knuth");
+
+        Set<String> authors = new HashSet<>();
+        authors.add("J.K. Rowling");
+
+        Set<String> titles = new HashSet<>();
+        titles.add("Harry Potter");
+        titles.add("Mathematics for the Analysis of Algorithms");
+
+        assertEquals(authors, library.getAuthors());
+        assertEquals(titles, library.getTitles());
+        assertNull(library.getTitles("Donald Knuth"));
+    }
+
+    @Test
+    public void removeAuthorForBooksWithMoreThanOneAuthorsOnlyRemovesAssociatedTitle() throws Exception {
+        library.add(new Book("The Art of Computer Programming", "Donald Knuth"));
+        library.add(new Book("Mathematics for the Analysis of Algorithms", "Donald Knuth", "Daniel Greene"));
+        library.add(new Book("My Thesis", "Daniel Greene"));
         library.removeByAuthor("Donald Knuth");
 
         Set<String> authors = new HashSet<>();
@@ -220,6 +239,7 @@ public class LibraryTest {
         Set<String> titles = new HashSet<>();
         titles.add("Harry Potter");
         titles.add("Mathematics for the Analysis of Algorithms");
+        titles.add("My Thesis");
 
         assertEquals(authors, library.getAuthors());
         assertEquals(titles, library.getTitles());
@@ -243,5 +263,26 @@ public class LibraryTest {
         assertEquals(authors, library.getAuthors());
         assertEquals(titles, library.getTitles());
         assertNull(library.getTitles("Daniel Greene"));
+    }
+
+    @Test
+    public void removeTitleWithMoreThanOneAuthorsRetainsOtherBooks() throws Exception {
+        library.add(new Book("The Art of Computer Programming", "Donald Knuth"));
+        library.add(new Book("Mathematics for the Analysis of Algorithms", "Donald Knuth", "Daniel Greene"));
+        library.add(new Book("My Thesis", "Daniel Greene"));
+        library.removeByTitle("Mathematics for the Analysis of Algorithms");
+
+        Set<String> authors = new HashSet<>();
+        authors.add("J.K. Rowling");
+        authors.add("Donald Knuth");
+        authors.add("Daniel Greene");
+
+        Set<String> titles = new HashSet<>();
+        titles.add("Harry Potter");
+        titles.add("The Art of Computer Programming");
+        titles.add("My Thesis");
+
+        assertEquals(authors, library.getAuthors());
+        assertEquals(titles, library.getTitles());
     }
 }
