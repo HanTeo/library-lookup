@@ -1,22 +1,24 @@
 import java.util.*;
 
-class Library {
+public class Library {
+
     private HashMap<String, Set<String>> authorsByTitles;
     private HashMap<String, Set<String>> titlesByAuthor;
 
-    Library(Book[] books) {
+    public Library(Book[] books) {
         authorsByTitles = new HashMap<>();
         titlesByAuthor = new HashMap<>();
         Arrays.stream(books).forEach(this::add);
     }
 
-    void add(Book book) {
-        Set<String> authors = authorsByTitles.putIfAbsent(book.getTitle(), new HashSet<>());
-        if (authors == null) {
-            authors = getAuthors(book.getTitle());
-        }
-        Collections.addAll(authors, book.getAuthors());
+    public void add(Book book) {
 
+        appendTitlesIndex(book);
+
+        appendAuthorsIndex(book);
+    }
+
+    private void appendAuthorsIndex(Book book) {
         for (String author : book.getAuthors()) {
             Set<String> titles = titlesByAuthor.putIfAbsent(author, new HashSet<>());
             if (titles == null) {
@@ -26,7 +28,15 @@ class Library {
         }
     }
 
-    void removeTitle(String title) {
+    private void appendTitlesIndex(Book book) {
+        Set<String> authors = authorsByTitles.putIfAbsent(book.getTitle(), new HashSet<>());
+        if (authors == null) {
+            authors = getAuthors(book.getTitle());
+        }
+        Collections.addAll(authors, book.getAuthors());
+    }
+
+    public void removeByTitle(String title) {
         Set<String> authors = getAuthors(title);
 
         if (authors == null)
@@ -44,7 +54,7 @@ class Library {
         });
     }
 
-    void removeByAuthor(String author) {
+    public void removeByAuthor(String author) {
         Set<String> titles = getTitles(author);
 
         if (titles == null)
@@ -62,19 +72,19 @@ class Library {
         });
     }
 
-    Set<String> getAuthors() {
+    public Set<String> getAuthors() {
         return titlesByAuthor.keySet();
     }
 
-    Set<String> getAuthors(String title) {
+    public Set<String> getAuthors(String title) {
         return authorsByTitles.get(title);
     }
 
-    Set<String> getTitles() {
+    public Set<String> getTitles() {
         return authorsByTitles.keySet();
     }
 
-    Set<String> getTitles(String author) {
+    public Set<String> getTitles(String author) {
         return titlesByAuthor.get(author);
     }
 }

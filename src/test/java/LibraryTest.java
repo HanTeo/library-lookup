@@ -124,7 +124,7 @@ public class LibraryTest {
     public void testRemoveGivenTitle() throws Exception {
         library.add(new Book("Fantastic Beasts", "J.K. Rowling"));
         library.add(new Book("The Elements of Style", "E.B. White", "William Strunk Jr."));
-        library.removeTitle("The Elements of Style");
+        library.removeByTitle("The Elements of Style");
 
         Set<String> remainingBooks = new HashSet<>();
         remainingBooks.add("Harry Potter");
@@ -195,7 +195,7 @@ public class LibraryTest {
     public void testRemoveTitleWithMoreThanOneAuthors() throws Exception {
         library.add(new Book("The Art of Computer Programming", "Donald Knuth"));
         library.add(new Book("Mathematics for the Analysis of Algorithms", "Donald Knuth", "Daniel Greene"));
-        library.removeTitle("Mathematics for the Analysis of Algorithms");
+        library.removeByTitle("Mathematics for the Analysis of Algorithms");
 
         Set<String> authors = new HashSet<>();
         authors.add("J.K. Rowling");
