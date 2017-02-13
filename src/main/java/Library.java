@@ -5,7 +5,7 @@ public class Library implements IndexedLookUp {
     private Map<String, Set<String>> authorsByTitles;
     private Map<String, Set<String>> titlesByAuthor;
 
-    public Library(Book[] books) {
+    Library(Book[] books) {
         authorsByTitles = new HashMap<>();
         titlesByAuthor = new HashMap<>();
         Arrays.stream(books).forEach(this::add);
@@ -72,9 +72,9 @@ public class Library implements IndexedLookUp {
             if (authors.size() > 1) {
                 authors.remove(author);
                 authors.forEach(associate -> {
-                    Set<String> ts = getTitles(associate);
-                    if (ts.size() > 1) {
-                        ts.remove(title);
+                    Set<String> associatedTitles = getTitles(associate);
+                    if (associatedTitles.size() > 1) {
+                        associatedTitles.remove(title);
                     } else {
                         titlesByAuthor.remove(associate);
                     }
