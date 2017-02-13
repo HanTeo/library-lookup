@@ -15,7 +15,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void testInitialization() throws Exception {
+    public void initialization() throws Exception {
         Set<String> authors = new HashSet<>();
         authors.add("J.K. Rowling");
 
@@ -27,14 +27,14 @@ public class LibraryTest {
     }
 
     @Test
-    public void testInitializationEmptyCollection() throws Exception {
+    public void initializationWithEmptyCollection() throws Exception {
         library = new Library(new Book[0]);
         assertTrue(library.getAuthors().isEmpty());
         assertTrue(library.getTitles().isEmpty());
     }
 
     @Test
-    public void testAddTitleOfSameAuthor() throws Exception {
+    public void addTitleOfSameAuthor() throws Exception {
         library.add(new Book("Fantastic Beasts", "J.K. Rowling"));
 
         Set<String> authors = new HashSet<>();
@@ -49,7 +49,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void testAddTitleOfDifferentAuthor() throws Exception {
+    public void addTitleOfDifferentAuthor() throws Exception {
         library.add(new Book("The Art of Computer Programming", "Donald Knuth"));
 
         Set<String> authors = new HashSet<>();
@@ -65,7 +65,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void testAddTitleOfWithMultipleAuthors() throws Exception {
+    public void addTitleOfWithMultipleAuthors() throws Exception {
         library.add(new Book("The Elements of Style", "E.B. White", "William Strunk Jr."));
 
         Set<String> authors = new HashSet<>();
@@ -82,7 +82,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void testGetTitlesOfGivenAuthor() throws Exception {
+    public void getTitlesOfGivenAuthor() throws Exception {
         library.add(new Book("Fantastic Beasts", "J.K. Rowling"));
         library.add(new Book("The Elements of Style", "E.B. White", "William Strunk Jr."));
 
@@ -94,12 +94,12 @@ public class LibraryTest {
     }
 
     @Test
-    public void testGetTitlesOfGivenNonExistingAuthor() throws Exception {
+    public void getTitlesOfGivenNonExistingAuthor() throws Exception {
         assertNull(library.getTitles("Eric Raymond"));
     }
 
     @Test
-    public void testGetAuthorsOfGivenTitle() throws Exception {
+    public void getAuthorsOfGivenTitle() throws Exception {
         library.add(new Book("Fantastic Beasts", "J.K. Rowling"));
         library.add(new Book("The Elements of Style", "E.B. White", "William Strunk Jr."));
 
@@ -115,12 +115,12 @@ public class LibraryTest {
     }
 
     @Test
-    public void testGetAuthorsOfGivenNonExistingTitle() throws Exception {
+    public void getAuthorsOfGivenNonExistingTitle() throws Exception {
         assertNull(library.getAuthors("Jurassic Park"));
     }
 
     @Test
-    public void testRemoveGivenTitle() throws Exception {
+    public void removeGivenTitle() throws Exception {
         library.add(new Book("Fantastic Beasts", "J.K. Rowling"));
         library.add(new Book("The Elements of Style", "E.B. White", "William Strunk Jr."));
         library.removeByTitle("The Elements of Style");
@@ -140,7 +140,27 @@ public class LibraryTest {
     }
 
     @Test
-    public void testRemoveTitlesFromGivenAuthor() throws Exception {
+    public void removeNonExistentTitle() throws Exception {
+        library.add(new Book("Fantastic Beasts", "J.K. Rowling"));
+        library.add(new Book("The Elements of Style", "E.B. White", "William Strunk Jr."));
+        library.removeByTitle("Machine Learning");
+
+        Set<String> remainingBooks = new HashSet<>();
+        remainingBooks.add("Harry Potter");
+        remainingBooks.add("Fantastic Beasts");
+        remainingBooks.add("The Elements of Style");
+
+        Set<String> remainingAuthors = new HashSet<>();
+        remainingAuthors.add("J.K. Rowling");
+        remainingAuthors.add("E.B. White");
+        remainingAuthors.add("William Strunk Jr.");
+
+        assertEquals(remainingBooks, library.getTitles());
+        assertEquals(remainingAuthors, library.getAuthors());
+    }
+
+    @Test
+    public void removeTitlesFromGivenAuthor() throws Exception {
         library.add(new Book("Fantastic Beasts", "J.K. Rowling"));
         library.add(new Book("The Elements of Style", "E.B. White", "William Strunk Jr."));
         library.removeByAuthor("J.K. Rowling");
@@ -158,7 +178,23 @@ public class LibraryTest {
     }
 
     @Test
-    public void AddingDupesHasNoEffect() throws Exception {
+    public void removeTitlesFromNonExistentAuthor() throws Exception {
+        library.add(new Book("Fantastic Beasts", "J.K. Rowling"));
+        library.removeByAuthor("George Orwell");
+
+        Set<String> remainingBooks = new HashSet<>();
+        remainingBooks.add("Harry Potter");
+        remainingBooks.add("Fantastic Beasts");
+
+        Set<String> remainingAuthors = new HashSet<>();
+        remainingAuthors.add("J.K. Rowling");
+
+        assertEquals(remainingBooks, library.getTitles());
+        assertEquals(remainingAuthors, library.getAuthors());
+    }
+
+    @Test
+    public void addingDupesHasNoEffect() throws Exception {
         library.add(new Book("Harry Potter", "J.K. Rowling"));
 
         Set<String> authors = new HashSet<>();
@@ -172,7 +208,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void testRemoveAuthorWithMoreThanOneAuthors() throws Exception {
+    public void removeAuthorWithMoreThanOneAuthors() throws Exception {
         library.add(new Book("The Art of Computer Programming", "Donald Knuth"));
         library.add(new Book("Mathematics for the Analysis of Algorithms", "Donald Knuth", "Daniel Greene"));
         library.removeByAuthor("Donald Knuth");
@@ -191,7 +227,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void testRemoveTitleWithMoreThanOneAuthors() throws Exception {
+    public void removeTitleWithMoreThanOneAuthors() throws Exception {
         library.add(new Book("The Art of Computer Programming", "Donald Knuth"));
         library.add(new Book("Mathematics for the Analysis of Algorithms", "Donald Knuth", "Daniel Greene"));
         library.removeByTitle("Mathematics for the Analysis of Algorithms");
