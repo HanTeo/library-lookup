@@ -5,12 +5,12 @@ A Java / Gradle TDD project. The demo class makes use of some Java 8 features i.
 Optimise lookup by Author & Title.
 
 ## Author -> Titles Index
-Internally this is a HashMap<String, Set<String>>
+Internally this is a `HashMap<String, Set<String>>’
 - key: author name `String`. This utilises the built in String hashing function to provide a `O(n)` time complexity for lookups
 - value: set of titles `HashSet<String>`. This enables title entries to be removed with `O(n)` complexity
 
 ## Title -> Authors Index
-Internally this is also a HashMap<String, Set<String>> with keys and value reversed compared to the previous index.
+Internally this is also a `HashMap<String, Set<String>>` with keys and value reversed compared to the previous index.
 - key: book title `String`. This utilises the built in String hashing function to provide a `O(n)` time complexity for lookups
 - value: author name `HashSet<String>`. This enables name entries to be removed with `O(n)` complexity
 
